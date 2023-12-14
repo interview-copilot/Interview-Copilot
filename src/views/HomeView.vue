@@ -22,7 +22,7 @@
         <LoadingIcon v-show="show_ai_thinking_effect"/>
         <div class="ai_result_content">{{ ai_result }}</div>
         <div class="single_part_bottom_bar">
-          <el-button icon="el-icon-lock" @click="askCurrentText" :disabled="!isGetGPTAnswerAvailable">
+          <el-button icon="el-icon-thumb" @click="askCurrentText" :disabled="!isGetGPTAnswerAvailable">
             Ask GPT
           </el-button>
         </div>
@@ -91,7 +91,7 @@ export default {
       let content = this.currentText
       this.ai_result = ""
       this.show_ai_thinking_effect = true
-      const model = localStorage.getItem("gpt_model") || "gpt-3.5-turbo"
+      const model = config_util.gpt_model()
       const gpt_system_prompt = config_util.gpt_system_prompt()
       content = gpt_system_prompt + "\n" + content
 
@@ -114,7 +114,7 @@ export default {
         }
       } catch (e) {
         this.show_ai_thinking_effect = false
-        this.ai_result = ""+ e
+        this.ai_result = "" + e
       }
     },
     clearASRContent() {
@@ -123,8 +123,8 @@ export default {
     async startCopilot() {
       this.copilot_starting = true
       const token = localStorage.getItem("azure_token")
-      const region = localStorage.getItem("azure_region")
-      const language = localStorage.getItem("azure_language") || "en-US"
+      const region = config_util.azure_region()
+      const language = config_util.azure_language()
       const openai_key = localStorage.getItem("openai_key")
       console.log({region, language})
       try {

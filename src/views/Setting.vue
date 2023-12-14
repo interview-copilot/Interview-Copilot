@@ -56,6 +56,10 @@
       other language codes
     </div>
 
+<!--    <div>-->
+<!--      <el-button @click="toDef">set all setting to default</el-button>-->
+<!--    </div>-->
+
   </div>
 </template>
 
@@ -82,15 +86,18 @@ export default {
   mounted() {
     this.openai_key = localStorage.getItem("openai_key")
     this.gpt_system_prompt = config_util.gpt_system_prompt()
-    this.gpt_model = localStorage.getItem("gpt_model") || "gpt-3.5-turbo"
+    this.gpt_model = config_util.gpt_model()
     this.azure_token = localStorage.getItem("azure_token")
-    this.azure_region = localStorage.getItem("azure_region") || "eastasia"
-    this.azure_language = localStorage.getItem("azure_language") || "en-US"
+    this.azure_region = config_util.azure_region()
+    this.azure_language = config_util.azure_language()
   },
   methods: {
     onKeyChange(key_name) {
       console.log("setItem", key_name, this[key_name])
       localStorage.setItem(key_name, this[key_name])
+    },
+    toDef() {
+      localStorage.clear();
     }
   }
 
