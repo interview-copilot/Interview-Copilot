@@ -50,6 +50,7 @@ import LoadingIcon from "@/components/LoadingIcon.vue";
 import MyTimer from "@/components/MyTimer.vue";
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 import OpenAI from "openai";
+import config_util from "../utils/config_util"
 
 export default {
   name: 'HomeView',
@@ -59,7 +60,8 @@ export default {
       return (process.env.NODE_ENV === 'development')
     },
     isGetGPTAnswerAvailable() {
-      return this.state === "ing" && !!this.currentText
+      // return this.state === "ing" && !!this.currentText
+      return !!this.currentText
 
     }
   },
@@ -78,24 +80,27 @@ export default {
   async mounted() {
     console.log("mounted")
     if (this.isDevMode) {
-    }
-    const apiKey = localStorage.getItem("openai_key")
-    if (apiKey) {
-      this.openai = new OpenAI({apiKey: apiKey, dangerouslyAllowBrowser: true});
+      // this.currentText = demo_text
     }
   },
   beforeDestroy() {
   },
   methods: {
     async askCurrentText() {
+      const apiKey = localStorage.getItem("openai_key")
       let content = this.currentText
       this.ai_result = ""
       this.show_ai_thinking_effect = true
       const model = localStorage.getItem("gpt_model") || "gpt-3.5-turbo"
-      const gpt_system_prompt = localStorage.getItem("gpt_system_prompt") || ""
+      const gpt_system_prompt = config_util.gpt_system_prompt()
       content = gpt_system_prompt + "\n" + content
 
       try {
+        if (!apiKey) {
+          throw new Error("You should setup an Open AI Key!")
+        }
+
+        const openai = new OpenAI({apiKey: apiKey, dangerouslyAllowBrowser: true})
         const stream = await openai.chat.completions.create({
           model: model,
           messages: [{role: "user", content: content}],
@@ -109,7 +114,7 @@ export default {
         }
       } catch (e) {
         this.show_ai_thinking_effect = false
-        this.ai_result = "ERROR:" + e
+        this.ai_result = ""+ e
       }
     },
     clearASRContent() {
@@ -183,6 +188,18 @@ export default {
   }
 }
 
+
+const demo_text = `
+Hello, thank you for coming for the interview. Please introduce yourself.
+
+I'm Jhon, currently an undergraduate student majoring in Data Science at HK University. I am in the top 10% of my class, specializing in deep learning and proficient in web development. Additionally, I have contributed to several well-known open-source projects as mentioned in my resume.
+
+Alright, let me ask you a machine learning question.
+
+Sure, go ahead.
+
+Can you explain the Hidden Markov Model?
+`
 
 async function sleep(ms) {
   return new Promise((resolve => setTimeout(resolve, ms)))

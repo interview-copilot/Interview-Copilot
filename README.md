@@ -8,7 +8,7 @@ Interview Copilot is a web application that captures audio from the microphone,
 utilizes Microsoft Azure's speech recognition service to obtain transcript, 
 and then invokes GPT to generate answer.
 
-
+![](./docs/imgs/2_demo/demo.png)
 
 ## Why Interview Copilot?
 
@@ -31,8 +31,7 @@ Also, It is **serverless**, the API Token information is stored locally in your 
 
 In order to use GPT, you need an Open AI API Token: https://platform.openai.com
 
-In addition, voice recognition relies on Azure's  speech recognition service, 
-which you can apply for a free token by referring to [this tutorial](./docs/azure_speech_service_tutorial.md).
+To use Azure's speech recognition service, you can apply for a free token by referring to [this tutorial](./docs/azure_speech_service_tutorial.md).
 
 
 ## Developing

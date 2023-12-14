@@ -7,16 +7,18 @@
     </div>
 
     <h1>Open AI</h1>
-    <div class="desc_text">To use GPT, you need an API Token from the <a href="https://platform.openai.com">Open AI</a>
+    <div class="desc_text">To use GPT, you need an API Key from the <a :href="open_ai_api_url" target="_blank">Open
+      AI</a>
     </div>
 
     <div>
       <el-input placeholder="sk-xxxx" v-model="openai_key" @change="onKeyChange('openai_key')">
-        <template slot="prepend">API Token:</template>
+        <template slot="prepend">API Key:</template>
       </el-input>
     </div>
 
     <div class="separator">
+      GPT Model:
       <el-radio-group v-model="gpt_model" @change="onKeyChange('gpt_model')">
         <el-radio label="gpt-3.5-turbo"></el-radio>
         <el-radio label="gpt-4"></el-radio>
@@ -24,15 +26,16 @@
     </div>
 
     <div class="separator">
+      <div class="desc_text">GPT Prompt:</div>
       <el-input type="textarea" placeholder="You can setup custom prompt here" :rows="5"
-                v-model="gpt_system_prompt"/>
+                v-model="gpt_system_prompt" @change="onKeyChange('gpt_system_prompt')"/>
     </div>
 
 
     <h1>Azure Speech Recognition</h1>
     <div class="desc_text">
       We use Microsoft Azure's speech recognition service. You can apply for a free Azure token by referring to <a
-        :href="azure_application_url">this tutorial</a>:
+        :href="azure_application_url" target="_blank">this tutorial</a>:
     </div>
     <el-input placeholder="Input Your Azure Speech Resource Token (KEY 1)" v-model="azure_token"
               @change="onKeyChange('azure_token')">
@@ -48,7 +51,8 @@
     </el-input>
 
     <div class="desc_text">
-      <span style="text-decoration: gray">zh-CN</span> for Chinese, See <a :href="full_language_codec_url">here</a> for
+      <span style="text-decoration: gray">zh-CN</span> for Chinese, See <a :href="full_language_codec_url"
+                                                                           target="_blank">here</a> for
       other language codes
     </div>
 
@@ -56,6 +60,7 @@
 </template>
 
 <script>
+import config_util from "../utils/config_util"
 
 export default {
   name: 'HelloWorld',
@@ -68,14 +73,15 @@ export default {
       azure_token: "",
       azure_region: "",
       azure_language: "",
-      github_url: "",
-      azure_application_url: "",
+      open_ai_api_url: "https://platform.openai.com/api-keys",
+      github_url: "https://github.com/interview-copilot/Interview-Copilot",
+      azure_application_url: "https://github.com/interview-copilot/Interview-Copilot/blob/main/docs/azure_speech_service_tutorial.md",
       full_language_codec_url: "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-support?tabs=stt#speech-to-text"
     }
   },
   mounted() {
     this.openai_key = localStorage.getItem("openai_key")
-    this.gpt_system_prompt = localStorage.getItem("gpt_system_prompt")
+    this.gpt_system_prompt = config_util.gpt_system_prompt()
     this.gpt_model = localStorage.getItem("gpt_model") || "gpt-3.5-turbo"
     this.azure_token = localStorage.getItem("azure_token")
     this.azure_region = localStorage.getItem("azure_region") || "eastasia"
