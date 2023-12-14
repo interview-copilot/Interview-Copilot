@@ -1,0 +1,35 @@
+{
+  "name": "front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "assert-js": "^1.0.0",
+    "axios": "^1.6.2",
+    "core-js": "^3.8.3",
+    "crypto-js": "^4.2.0",
+    "element-ui": "^2.15.14",
+    "markdown-it": "^13.0.2",
+    "marked": "^10.0.0",
+    "md5-hex": "^5.0.0",
+    "microsoft-cognitiveservices-speech-sdk": "^1.33.1",
+    "moment": "^2.29.4",
+    "mongodb": "^6.3.0",
+    "openai": "^4.20.1",
+    "raw-loader": "^4.0.2",
+    "universal-cookie": "^6.1.1",
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.1",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "vue-template-compiler": "^2.6.14"
+  }
+}
