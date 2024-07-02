@@ -1,13 +1,19 @@
 <template>
-  <div class="homeview_container">
+  <div class="homeview_container" @keydown="handleKeyPress">
     <div class="center_container">
       <div class="box">
         <div class="func_desc">
           <i class="el-icon-microphone"></i>
           Speech Recognition Results
         </div>
-        <div v-if="!currentText" style="color: gray">No Content</div>
-        <div class="asr_content">{{ currentText }}</div>
+        <el-input
+          v-model="currentText"
+          type="textarea"
+          :autosize="true"
+          resize="none"
+          placeholder="Enter text here"
+          class="fixed-height-input"
+        ></el-input>
         <div class="single_part_bottom_bar">
           <el-button icon="el-icon-delete" :disabled="!currentText" @click="clearASRContent">
             Clear Text
@@ -20,7 +26,7 @@
           GPT Answer
         </div>
         <LoadingIcon v-show="show_ai_thinking_effect"/>
-        <div class="ai_result_content">{{ ai_result }}</div>
+        <div class="ai_result_content fixed-height-input">{{ ai_result }}</div>
         <div class="single_part_bottom_bar">
           <el-button icon="el-icon-thumb" @click="askCurrentText" :disabled="!isGetGPTAnswerAvailable">
             Ask GPT
@@ -40,7 +46,6 @@
       </el-button>
       <MyTimer ref="MyTimer"/>
     </div>
-
   </div>
 </template>
 
@@ -60,9 +65,7 @@ export default {
       return (process.env.NODE_ENV === 'development')
     },
     isGetGPTAnswerAvailable() {
-      // return this.state === "ing" && !!this.currentText
       return !!this.currentText
-
     }
   },
   components: {LoadingIcon, MyTimer},
@@ -86,6 +89,13 @@ export default {
   beforeDestroy() {
   },
   methods: {
+    handleKeyPress(event) {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+        if (this.isGetGPTAnswerAvailable) {
+          this.askCurrentText();
+        }
+      }
+    },
     async askCurrentText() {
       const apiKey = localStorage.getItem("openai_key")
       let content = this.currentText
@@ -229,12 +239,13 @@ async function sleep(ms) {
 }
 
 .box {
-  flex: 1; /* 设置flex属性为1，使两个div平分父容器的宽度 */
-  border: 1px lightgray solid; /* 为了演示，添加边框样式 */
-  padding: 10px; /* 为了演示，添加内边距 */
+  flex: 1;
+  border: 1px lightgray solid;
+  padding: 10px;
   white-space: pre-wrap;
   display: flex;
   flex-direction: column;
+  margin: 10px;
 }
 
 .asr_content {
@@ -242,6 +253,13 @@ async function sleep(ms) {
   flex-grow: 1;
 }
 
+.fixed-height-input {
+  resize: none;
+  height: 2000px;
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
 
 .func_desc {
   text-align: center;
@@ -249,12 +267,12 @@ async function sleep(ms) {
 
 .single_part_bottom_bar {
   display: flex;
+  justify-content: flex-end;
 }
 
 .single_part_bottom_bar > .el-button {
   flex-grow: 1;
 }
-
 
 .ai_result_content {
   overflow-y: auto;
