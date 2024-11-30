@@ -1,6 +1,6 @@
 > For Chinese users, we have provided an improved version: [https://mszl.me ](https://mszl.me )
 > 
-> （对于中国地区用户，我们提供了一个优化版本：[https://mszl.me ](https://mszl.me ) ）: 
+> （对于中国地区用户，我们提供了一个优化版本：[https://mszl.me ](https://mszl.me ) ）
 
 # Interview Copilot
 
