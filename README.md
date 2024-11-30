@@ -1,6 +1,6 @@
-> If you encounter difficulties accessing the GPT service in your region, you can consider trying the paid service: [https://mszl.app ](https://mszl.app )
+> For Chinese users, we have provided an improved version: [https://mszl.me ](https://mszl.me )
 > 
-> （如果你所在的地区访问GPT服务有困难，可以尝试购买付费服务，无需额外设置：[https://mszl.app ](https://mszl.app ) ）: 
+> （对于中国地区用户，我们提供了一个优化版本：[https://mszl.me ](https://mszl.me ) ）: 
 
 # Interview Copilot
 
